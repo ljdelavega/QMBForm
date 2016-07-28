@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.quemb.qmbform.R;
+
 /**
  * Created by tonimoeckel on 14.07.14.
  */
@@ -30,6 +32,23 @@ public class FormDescriptor {
     }
 
     public FormDescriptor() {
+        // set default cell config
+        mCellConfig = new HashMap<String, Object>();
+
+        // TextAppearance for section, label, value and button
+        mCellConfig.put(CellDescriptor.APPEARANCE_SECTION, Integer.valueOf(R.style.TextAppearance_Form_Section));
+        mCellConfig.put(CellDescriptor.APPEARANCE_TEXT_LABEL, Integer.valueOf(R.style.TextAppearance_Form_Label));
+        mCellConfig.put(CellDescriptor.APPEARANCE_TEXT_VALUE, Integer.valueOf(R.style.TextAppearance_Form_Value));
+        mCellConfig.put(CellDescriptor.APPEARANCE_BUTTON, Integer.valueOf(R.style.TextAppearance_Form_Button));
+
+        // Enabled color for label and value
+        // value is color as Integer.valueOf(OxAARRGGBB)
+        mCellConfig.put(CellDescriptor.COLOR_LABEL, Integer.valueOf(0xFF000000)); // black
+        mCellConfig.put(CellDescriptor.COLOR_VALUE, Integer.valueOf(0xFF000000)); // black
+
+        // Disabled color for label and value
+        mCellConfig.put(CellDescriptor.COLOR_LABEL_DISABLED, Integer.valueOf(0xFF999999)); //gray
+        mCellConfig.put(CellDescriptor.COLOR_VALUE_DISABLED, Integer.valueOf(0xFF999999)); //gray
         mSections = new ArrayList<SectionDescriptor>();
     }
 
