@@ -12,6 +12,7 @@ public class SectionDescriptor extends FormItemDescriptor {
     private FormDescriptor mFormDescriptor;
     private ArrayList<RowDescriptor> mRows;
     private Boolean mMultivalueSection = false;
+    private Boolean mDisabled = false;
 
     public static SectionDescriptor newInstance(String tag) {
 
@@ -140,4 +141,16 @@ public class SectionDescriptor extends FormItemDescriptor {
         return values;
 
     }
+
+    public Boolean getDisabled() {
+        return this.mDisabled;
+    }
+
+    public void setDisabled(Boolean disabled) {
+        this.mDisabled = disabled;
+        for (RowDescriptor r : mRows) {
+            r.setDisabled(disabled);
+        }
+    }
+
 }
