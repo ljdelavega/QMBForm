@@ -24,9 +24,11 @@ public class FormManager implements OnFormRowChangeListener, OnFormRowValueChang
 
     private FormDescriptor mFormDescriptor;
     protected ListView mListView;
+    private FormAdapter mAdapter;
     protected OnFormRowClickListener mOnFormRowClickListener;
     private OnFormRowChangeListener mOnFormRowChangeListener;
     private OnFormRowValueChangedListener mOnFormRowValueChangedListener;
+
 
     public FormManager() {
 
@@ -42,14 +44,14 @@ public class FormManager implements OnFormRowChangeListener, OnFormRowValueChang
         mFormDescriptor.setOnFormRowChangeListener(this);
         mFormDescriptor.setOnFormRowValueChangedListener(this);
 
-        final FormAdapter adapter = FormAdapter.newInstance(mFormDescriptor, context);
-        listView.setAdapter(adapter);
+        mAdapter = FormAdapter.newInstance(mFormDescriptor, context);
+        listView.setAdapter(mAdapter);
         listView.setDividerHeight(1);
         listView.setDescendantFocusability(ViewGroup.FOCUS_AFTER_DESCENDANTS);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                FormItemDescriptor itemDescriptor = adapter.getItem(position);
+                FormItemDescriptor itemDescriptor = mAdapter.getItem(position);
 
                 Cell cell = itemDescriptor.getCell();
                 if (cell != null && itemDescriptor instanceof RowDescriptor) {
@@ -86,6 +88,10 @@ public class FormManager implements OnFormRowChangeListener, OnFormRowValueChang
         if (adapter != null) {
             adapter.notifyDataSetChanged();
         }
+    }
+
+    public int getItemIndex(FormItemDescriptor item) {
+        return mAdapter.getItemIndex(item);
     }
 
 

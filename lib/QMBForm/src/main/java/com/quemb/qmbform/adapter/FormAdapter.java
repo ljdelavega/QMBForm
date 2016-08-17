@@ -59,7 +59,6 @@ public class FormAdapter extends BaseAdapter {
 
     @Override
     public FormItemDescriptor getItem(int position) {
-
         return mItems.get(position);
     }
 
@@ -70,11 +69,12 @@ public class FormAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-
-
         return CellViewFactory.getInstance().createViewForFormItemDescriptor(mContext, getItem(position));
     }
 
+    public int getItemIndex (FormItemDescriptor item) {
+        return mItems.indexOf(item);
+    }
 
     public Boolean getEnableSectionSeperator() {
         return mEnableSectionSeperator;
