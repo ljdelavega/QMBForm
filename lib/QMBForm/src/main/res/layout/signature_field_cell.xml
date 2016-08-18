@@ -15,6 +15,7 @@
         android:paddingRight="10dp"/>
 
     <LinearLayout
+        android:id="@+id/signatureView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical">

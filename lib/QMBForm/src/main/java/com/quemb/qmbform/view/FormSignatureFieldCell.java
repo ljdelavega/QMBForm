@@ -6,6 +6,7 @@ import android.media.Image;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.quemb.qmbform.R;
@@ -24,7 +25,7 @@ import java.util.Date;
 public class FormSignatureFieldCell extends FormBaseCell {
 
     private TextView mTextView;
-
+    private LinearLayout mSignatureView;
     private ImageView mImageView;
     private EditText mName;
     private EditText mDate;
@@ -40,6 +41,7 @@ public class FormSignatureFieldCell extends FormBaseCell {
 
         super.init();
         mTextView = (TextView) findViewById(R.id.textView);
+        mSignatureView = (LinearLayout) findViewById(R.id.signatureView);
         mImageView = (ImageView) findViewById(R.id.imageView);
         mName = (EditText) findViewById(R.id.nameText);
         mDate = (EditText) findViewById(R.id.dateText);
@@ -93,6 +95,11 @@ public class FormSignatureFieldCell extends FormBaseCell {
             setEnabled(false);
         }
 
+    }
+
+    @Override
+    public View getEditorView() {
+        return mSignatureView;
     }
 
     protected void initDatePicker(Calendar calendar) {
