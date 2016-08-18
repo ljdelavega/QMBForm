@@ -25,7 +25,7 @@ public class EmailValidator implements FormValidator {
         Value value = descriptor.getValue();
         if (value.getValue() != null && value.getValue() instanceof String) {
             String val = (String) value.getValue();
-            if (!val.matches(EMAIL_PATTERN)){
+            if (!"".equals(val) && !val.matches(EMAIL_PATTERN)){
                 result = new RowValidationError(descriptor, R.string.validation_invalid_email);
             }
         }else {
