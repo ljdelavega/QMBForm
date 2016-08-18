@@ -14,4 +14,10 @@
     <string name="cm_label">cm</string>
     <string name="test_error"/>
     <string name="nonpositive_number_error">must be greater than zero</string>
+    <string name="signature_title">Enter Signature</string>
+    <string name="name_entry_hint">Enter your name...</string>
+    <string name="date_entry_hint">Enter the date...</string>
+    <string name="agreement">I agree to the terms and conditions.</string>
+    <string name="clear_pad">Clear</string>
+    <string name="save_signature">Save</string>
 </resources>
