@@ -63,6 +63,9 @@ public abstract class Cell extends LinearLayout {
 
     protected abstract void update();
 
+    public abstract View getEditorView();
+    public abstract void setError(String error);
+
     public FormItemDescriptor getFormItemDescriptor() {
         return mFormItemDescriptor;
     }

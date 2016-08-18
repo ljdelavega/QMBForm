@@ -57,8 +57,13 @@ public class SectionDescriptor extends FormItemDescriptor {
         // Propagate the CellConfig from Section to Row
 
         HashMap<String, Object> cellConfig = getCellConfig();
-        if (cellConfig != null)
-            row.setCellConfig(cellConfig);
+        if (cellConfig != null) {
+            if (row.getCellConfig() != null) {
+                row.getCellConfig().putAll(cellConfig);
+            } else {
+                row.setCellConfig(cellConfig);
+            }
+        }
     }
 
     public void addRow(RowDescriptor row, HashMap<String, Object> cellConfig) {

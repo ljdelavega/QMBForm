@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
+import android.view.View;
 import android.widget.TextView;
 
 /**
@@ -73,6 +74,10 @@ public class FormDetailTextInlineFieldCell extends FormTitleFieldCell {
     }
 
     public TextView getDetailTextView() {
+        return mDetailTextView;
+    }
+
+    public View getEditorView() {
         return mDetailTextView;
     }
 

@@ -5,6 +5,7 @@ import com.quemb.qmbform.descriptor.CellDescriptor;
 import com.quemb.qmbform.descriptor.RowDescriptor;
 
 import android.content.Context;
+import android.view.View;
 import android.widget.TextView;
 
 /**
@@ -45,7 +46,6 @@ public class FormButtonFieldCell extends FormTitleFieldCell {
     @Override
     public void onCellSelected() {
         super.onCellSelected();
-
-
     }
+
 }

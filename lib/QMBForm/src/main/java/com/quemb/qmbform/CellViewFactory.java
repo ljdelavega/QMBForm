@@ -133,8 +133,9 @@ public class CellViewFactory {
             try {
                 FormBaseCell formBaseCell;
 
-                formBaseCell = mViewRowTypeMap.get(row.getRowType()).getConstructor(Context.class, RowDescriptor.class).newInstance(
-                        context, row);
+                Class<? extends FormBaseCell> clazz = mViewRowTypeMap.get(row.getRowType());
+                formBaseCell = clazz.getConstructor(Context.class, RowDescriptor.class).newInstance(context, row);
+
                 rowView = formBaseCell;
             } catch (InstantiationException e) {
                 Log.e(TAG, e.getMessage(),e);
@@ -147,6 +148,7 @@ public class CellViewFactory {
             }
 
         }
+        descriptor.setCell(rowView);
 
         return rowView;
 

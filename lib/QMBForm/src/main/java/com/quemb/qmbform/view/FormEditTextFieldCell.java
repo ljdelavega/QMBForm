@@ -2,6 +2,7 @@ package com.quemb.qmbform.view;
 
 import com.quemb.qmbform.R;
 import com.quemb.qmbform.descriptor.CellDescriptor;
+import com.quemb.qmbform.descriptor.FormItemDescriptor;
 import com.quemb.qmbform.descriptor.RowDescriptor;
 import com.quemb.qmbform.descriptor.Value;
 
@@ -10,12 +11,18 @@ import android.os.Handler;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.view.View;
 import android.widget.EditText;
+
+import java.util.HashMap;
 
 /**
  * Created by tonimoeckel on 15.07.14.
  */
 public class FormEditTextFieldCell extends FormTitleFieldCell {
+
+    public final static String CELL_CONFIG_MIN_LINES = "EditText.minLines";
+    public final static String CELL_CONFIG_INPUT_TYPE = "EditText.inputType";
 
     private EditText mEditView;
 
@@ -72,6 +79,7 @@ public class FormEditTextFieldCell extends FormTitleFieldCell {
 
         super.update();
 
+
         updateEditView();
 
         if (getRowDescriptor().getDisabled())
@@ -91,6 +99,21 @@ public class FormEditTextFieldCell extends FormTitleFieldCell {
             mEditView.setHint(hint);
         }
 
+        final int defaultInputType = mEditView.getInputType();
+        final HashMap<String, Object> config = getRowDescriptor().getCellConfig();
+        if (config != null) {
+            if (config.containsKey(CELL_CONFIG_INPUT_TYPE)) {
+                final Integer inputType = (Integer) config.get(CELL_CONFIG_INPUT_TYPE);
+                mEditView.setInputType(defaultInputType | inputType);
+            }
+
+            if (config.containsKey(CELL_CONFIG_MIN_LINES)) {
+                final Integer minLines = (Integer) config.get(CELL_CONFIG_MIN_LINES);
+                mEditView.setMinLines(minLines);
+            }
+        }
+
+
         @SuppressWarnings("unchecked") Value<String> value = (Value<String>) getRowDescriptor().getValue();
         if (value != null && value.getValue() != null) {
             String valueString = value.getValue();
@@ -101,6 +124,19 @@ public class FormEditTextFieldCell extends FormTitleFieldCell {
 
     public EditText getEditView() {
         return mEditView;
+    }
+
+    public View getEditorView() {
+        return mEditView;
+    }
+
+    /**
+     * Set the right side of the TextView to have an error icon and popup message when the field is focused.
+     * @param error - String for a message and icon, null to clear the icon and message.
+     */
+    public void setError(String error)
+    {
+        mEditView.setError(error);
     }
 
 }

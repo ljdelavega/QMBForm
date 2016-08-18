@@ -165,5 +165,8 @@ public abstract class FormBaseCell extends Cell {
 
     }
 
+    public void setError(String message) {
+        throw new RuntimeException("Cell does not support error interface");
+    }
 
 }

@@ -5,6 +5,7 @@ import com.quemb.qmbform.descriptor.CellDescriptor;
 import com.quemb.qmbform.descriptor.RowDescriptor;
 
 import android.content.Context;
+import android.view.View;
 import android.widget.TextView;
 
 /**
@@ -47,5 +48,9 @@ public class FormTitleFieldCell extends FormBaseCell {
 
     public TextView getTextView() {
         return mTextView;
+    }
+
+    public View getEditorView() {
+        return null;
     }
 }

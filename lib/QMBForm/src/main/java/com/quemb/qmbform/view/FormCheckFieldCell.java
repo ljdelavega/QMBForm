@@ -6,6 +6,7 @@ import com.quemb.qmbform.descriptor.RowDescriptor;
 import com.quemb.qmbform.descriptor.Value;
 
 import android.content.Context;
+import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 
@@ -65,6 +66,10 @@ public class FormCheckFieldCell extends FormBaseCell {
     }
 
     public CheckBox getCheckBox() {
+        return mCheckBox;
+    }
+
+    public View getEditorView() {
         return mCheckBox;
     }
 }

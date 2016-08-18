@@ -8,6 +8,7 @@ import com.quemb.qmbform.descriptor.Value;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
+import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 
@@ -69,5 +70,13 @@ public class FormBooleanFieldCell extends FormBaseCell {
 
     public Switch getSwitch() {
         return mSwitch;
+    }
+
+    public View getEditorView() {
+        return mSwitch;
+    }
+
+    public void setError(String message) {
+        mSwitch.setError(message);
     }
 }

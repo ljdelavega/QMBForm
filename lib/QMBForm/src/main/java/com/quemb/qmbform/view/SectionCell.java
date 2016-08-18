@@ -5,6 +5,7 @@ import com.quemb.qmbform.descriptor.CellDescriptor;
 import com.quemb.qmbform.descriptor.SectionDescriptor;
 
 import android.content.Context;
+import android.view.View;
 import android.widget.TextView;
 
 /**
@@ -59,4 +60,11 @@ public class SectionCell extends Cell {
         return (SectionDescriptor) getFormItemDescriptor();
     }
 
+    public View getEditorView() {
+        return null;
+    }
+
+    public void setError(String error) {
+        throw new RuntimeException("Cell does not support error interface");
+    }
 }

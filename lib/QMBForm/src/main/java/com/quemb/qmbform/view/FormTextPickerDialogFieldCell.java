@@ -93,4 +93,8 @@ public class FormTextPickerDialogFieldCell extends FormEditTextFieldCell {
         }
 
     }
+
+    public View getEditorView() {
+        return null;
+    }
 }

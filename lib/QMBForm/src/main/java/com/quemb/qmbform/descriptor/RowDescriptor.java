@@ -3,6 +3,8 @@ package com.quemb.qmbform.descriptor;
 import com.quemb.qmbform.R;
 import com.quemb.qmbform.annotation.FormElement;
 import com.quemb.qmbform.annotation.FormValidator;
+import com.quemb.qmbform.view.Cell;
+import com.quemb.qmbform.view.FormEditTextFieldCell;
 
 import android.content.Context;
 
@@ -119,7 +121,6 @@ public class RowDescriptor<T> extends FormItemDescriptor {
         descriptor.mValidators = new ArrayList<FormValidator>();
 
         return descriptor;
-
     }
 
     public static RowDescriptor newInstanceFromAnnotatedField(Field field, Value value, Context context) {

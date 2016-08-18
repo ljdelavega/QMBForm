@@ -8,6 +8,7 @@ import com.quemb.qmbform.descriptor.Value;
 
 import android.content.Context;
 import android.view.Gravity;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -67,6 +68,10 @@ public class FormSelectorSegmentedControlFieldCell extends FormBaseCell {
                 }
             }
         });
+    }
+
+    public View getEditorView() {
+        return mSegmentedGroup;
     }
 
     private void addButton(SegmentedGroup group, int id, String displayText, boolean checked) {

@@ -81,7 +81,9 @@ public class FormSpinnerFieldCell extends FormTitleFieldCell {
     @Override
     public void onCellSelected() {
         super.onCellSelected();
+    }
 
-
+    public View getEditorView() {
+        return mSpinner;
     }
 }

@@ -13,6 +13,7 @@ import org.robolectric.annotation.Config;
 
 import android.app.Activity;
 import android.inputmethodservice.Keyboard;
+import android.view.View;
 
 import static org.junit.Assert.*;
 
@@ -41,6 +42,10 @@ public class FormBaseCellTest {
             @Override
             protected void update() {
 
+            }
+
+            public View getEditorView() {
+                return null;
             }
         };
 
