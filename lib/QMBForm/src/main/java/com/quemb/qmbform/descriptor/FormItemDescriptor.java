@@ -1,5 +1,7 @@
 package com.quemb.qmbform.descriptor;
 
+import android.text.Html;
+
 import com.quemb.qmbform.OnFormRowClickListener;
 import com.quemb.qmbform.view.Cell;
 
@@ -15,16 +17,16 @@ public class FormItemDescriptor {
     protected String mTag;
 
 
-    protected String mTitle;
+    protected CharSequence mTitle;
     private OnFormRowClickListener mOnFormRowClickListener;
     private HashMap<String, Object> mCellConfig;
 
 
-    public String getTitle() {
-        return mTitle;
+    public CharSequence getTitle() {
+        return Html.fromHtml(mTitle.toString());
     }
 
-    public void setTitle(String title) {
+    public void setTitle(CharSequence title) {
         this.mTitle = title;
     }
 

@@ -9,6 +9,7 @@ import com.quemb.qmbform.exceptions.NoDataSourceException;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.text.Html;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
@@ -61,6 +62,11 @@ public class FormTextPickerDialogFieldCell extends FormEditTextFieldCell {
             getRowDescriptor().getDataSource().loadData(new DataSourceListener() {
                 @Override
                 public void onDataSourceLoaded(List list) {
+                    CharSequence title = getRowDescriptor().getTitle();
+                    if (getRowDescriptor().getRequired())
+                    {
+                        title = Html.fromHtml((title + " <sup><font color='red'>*</font></sup>"));
+                    }
 
                     if (list.size() > 0) {
                         final ArrayAdapter adapter = new ArrayAdapter(getContext(), android.R.layout.simple_selectable_list_item, list);
@@ -75,7 +81,7 @@ public class FormTextPickerDialogFieldCell extends FormEditTextFieldCell {
                                 dialog.dismiss();
                             }
                         })
-                                .setTitle(getRowDescriptor().getTitle());
+                                .setTitle(title);
 
                         AlertDialog dialog = builder.create();
                         dialog.show();

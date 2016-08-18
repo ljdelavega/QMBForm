@@ -5,6 +5,7 @@ import com.quemb.qmbform.descriptor.CellDescriptor;
 import com.quemb.qmbform.descriptor.RowDescriptor;
 
 import android.content.Context;
+import android.text.Html;
 import android.view.View;
 import android.widget.TextView;
 
@@ -34,7 +35,11 @@ public class FormTitleFieldCell extends FormBaseCell {
 
     @Override
     protected void update() {
-        String title = getFormItemDescriptor().getTitle();
+        CharSequence title = getRowDescriptor().getTitle();
+        if (getRowDescriptor().getRequired())
+        {
+            title = Html.fromHtml((title + " <sup><font color='red'>*</font></sup>"));
+        }
         mTextView.setText(title);
         mTextView.setVisibility(title == null ? GONE : VISIBLE);
 

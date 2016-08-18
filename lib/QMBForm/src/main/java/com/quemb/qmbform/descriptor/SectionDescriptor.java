@@ -43,7 +43,7 @@ public class SectionDescriptor extends FormItemDescriptor {
         mFormDescriptor = formDescriptor;
     }
 
-    public String getTitle() {
+    public CharSequence getTitle() {
         return mTitle;
     }
 

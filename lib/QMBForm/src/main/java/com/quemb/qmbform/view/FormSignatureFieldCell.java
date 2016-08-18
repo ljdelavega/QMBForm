@@ -3,6 +3,7 @@ package com.quemb.qmbform.view;
 import android.content.Context;
 import android.content.Intent;
 import android.media.Image;
+import android.text.Html;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -69,7 +70,11 @@ public class FormSignatureFieldCell extends FormBaseCell {
     @Override
     protected void update() {
 
-        String title = getFormItemDescriptor().getTitle();
+        CharSequence title = getRowDescriptor().getTitle();
+        if (getRowDescriptor().getRequired())
+        {
+            title = Html.fromHtml((title + " <sup><font color='red'>*</font></sup>"));
+        }
         mTextView.setText(title);
         mTextView.setVisibility(title == null ? GONE : VISIBLE);
 

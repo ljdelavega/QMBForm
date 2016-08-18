@@ -8,6 +8,7 @@ import com.quemb.qmbform.descriptor.Value;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
+import android.text.Html;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
@@ -50,7 +51,11 @@ public class FormBooleanFieldCell extends FormBaseCell {
     @Override
     protected void update() {
 
-        String title = getFormItemDescriptor().getTitle();
+        CharSequence title = getFormItemDescriptor().getTitle();
+        if (getRowDescriptor().getRequired())
+        {
+            title = Html.fromHtml((title + " <sup><font color='red'>*</font></sup>"));
+        }
 
         mSwitch.setText(title);
         if (getRowDescriptor().getDisabled())

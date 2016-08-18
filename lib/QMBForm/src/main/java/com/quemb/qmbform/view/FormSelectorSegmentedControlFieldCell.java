@@ -7,6 +7,7 @@ import com.quemb.qmbform.descriptor.RowDescriptor;
 import com.quemb.qmbform.descriptor.Value;
 
 import android.content.Context;
+import android.text.Html;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,7 +51,13 @@ public class FormSelectorSegmentedControlFieldCell extends FormBaseCell {
     protected void update() {
         mSegmentedGroup.removeAllViews();
 
-        mTextView.setText(getFormItemDescriptor().getTitle());
+        CharSequence title = getRowDescriptor().getTitle();
+        if (getRowDescriptor().getRequired())
+        {
+            title = Html.fromHtml((title + " <sup><font color='red'>*</font></sup>"));
+        }
+        mTextView.setText(title);
+
         List<FormOptionsObject> selectorOptions = getRowDescriptor().getSelectorOptions();
         for (FormOptionsObject option : selectorOptions) {
             addButton(mSegmentedGroup,

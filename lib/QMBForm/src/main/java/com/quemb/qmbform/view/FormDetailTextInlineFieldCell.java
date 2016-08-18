@@ -7,6 +7,7 @@ import com.quemb.qmbform.descriptor.Value;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.text.Html;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
@@ -64,7 +65,7 @@ public class FormDetailTextInlineFieldCell extends FormTitleFieldCell {
         Value<?> value = getRowDescriptor().getValue();
         if (value != null && value.getValue() != null) {
             if (value.getValue() instanceof String) {
-                getDetailTextView().setText((String) value.getValue());
+                getDetailTextView().setText(Html.fromHtml((String) value.getValue() ) );
             } else {
                 getDetailTextView().setText(String.valueOf(value.getValue()));
 
