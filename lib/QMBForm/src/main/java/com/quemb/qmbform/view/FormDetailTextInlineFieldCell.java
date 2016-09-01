@@ -67,10 +67,13 @@ public class FormDetailTextInlineFieldCell extends FormTitleFieldCell {
             if (value.getValue() instanceof String) {
                 getDetailTextView().setText(Html.fromHtml((String) value.getValue() ) );
             } else {
-                getDetailTextView().setText(String.valueOf(value.getValue()));
+                getDetailTextView().setText(String.valueOf(value.getValue() ) );
 
             }
         }
+
+        if (getRowDescriptor().getDisabled())
+            setTextColor(mDetailTextView, CellDescriptor.COLOR_LABEL_DISABLED);
 
     }
 

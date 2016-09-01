@@ -54,7 +54,6 @@ public class FormCheckFieldCell extends FormBaseCell {
             title = Html.fromHtml((title + " <sup><font color='red'>*</font></sup>"));
         }
 
-
         mCheckBox.setText(title);
         if (getRowDescriptor().getDisabled())
         {

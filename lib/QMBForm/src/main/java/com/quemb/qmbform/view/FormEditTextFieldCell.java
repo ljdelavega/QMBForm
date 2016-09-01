@@ -23,6 +23,7 @@ public class FormEditTextFieldCell extends FormTitleFieldCell {
 
     public final static String CELL_CONFIG_MIN_LINES = "EditText.minLines";
     public final static String CELL_CONFIG_INPUT_TYPE = "EditText.inputType";
+    public final static String CELL_CONFIG_GRAVITY = "EditText.gravity";
 
     private EditText mEditView;
 
@@ -110,6 +111,11 @@ public class FormEditTextFieldCell extends FormTitleFieldCell {
             if (config.containsKey(CELL_CONFIG_MIN_LINES)) {
                 final Integer minLines = (Integer) config.get(CELL_CONFIG_MIN_LINES);
                 mEditView.setMinLines(minLines);
+            }
+
+            if (config.containsKey(CELL_CONFIG_GRAVITY)) {
+                final Integer gravity = (Integer) config.get(CELL_CONFIG_GRAVITY);
+                mEditView.setGravity(gravity);
             }
         }
 
