@@ -24,7 +24,7 @@ public class FormTimeFieldCell extends FormDateFieldCell {
     protected void updateDateLabel(Date date, boolean disabled) {
 
         DateFormat dateFormat = android.text.format.DateFormat.getTimeFormat(getContext());
-        String s = dateFormat.format(date);
+        String s = dateFormat.getDateInstance().format(date);
 
         TextView editView = getDetailTextView();
         editView.setText(s);

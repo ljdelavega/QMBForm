@@ -155,7 +155,7 @@ public abstract class FormBaseCell extends Cell {
     public void onValueChanged(Value<?> newValue) {
         RowDescriptor row = getRowDescriptor();
         Value<?> oldValue = row.getValue();
-        if (oldValue == null || newValue == null || !newValue.getValue().equals(oldValue.getValue())) {
+        if (oldValue == null || newValue == null|| newValue.getValue() == null || !newValue.getValue().equals(oldValue.getValue())) {
             OnFormRowValueChangedListener listener = getRowDescriptor().getSectionDescriptor().getFormDescriptor().getOnFormRowValueChangedListener();
             row.setValue(newValue);
             if (listener != null) {

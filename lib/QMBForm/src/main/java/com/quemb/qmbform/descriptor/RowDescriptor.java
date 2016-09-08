@@ -55,10 +55,10 @@ public class RowDescriptor<T> extends FormItemDescriptor {
     public static final String FormRowDescriptorTypeSelectorSegmentedControlInline = "selectorSegmentedControlInline";
     public static final String FormRowDescriptorTypeSelectorSegmentedControl = "selectorSegmentedControl";
     public static final String FormRowDescriptorTypeDateInline = "dateInline";
-    public static final String FormRowDescriptorTypeDateTimeInline = "datetimeInline";
+    //public static final String FormRowDescriptorTypeDateTimeInline = "datetimeInline";
     public static final String FormRowDescriptorTypeTimeInline = "timeInline";
     public static final String FormRowDescriptorTypeDate = "date";
-    //public static final String FormRowDescriptorTypeDateTime = "datetime";
+    public static final String FormRowDescriptorTypeDateTime = "datetime";
     public static final String FormRowDescriptorTypeTime = "time";
     public static final String FormRowDescriptorTypeDatePicker = "datePicker";
     //public static final String FormRowDescriptorTypePicker = "picker";
