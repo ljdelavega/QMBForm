@@ -7,11 +7,12 @@ import com.quemb.qmbform.descriptor.Value;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.text.Html;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.TextView;
+
+import net.nightwhistler.htmlspanner.HtmlSpanner;
 
 /**
  * Created by pmaccamp on 9/4/2015.
@@ -65,7 +66,7 @@ public class FormDetailTextInlineFieldCell extends FormTitleFieldCell {
         Value<?> value = getRowDescriptor().getValue();
         if (value != null && value.getValue() != null) {
             if (value.getValue() instanceof String) {
-                getDetailTextView().setText(Html.fromHtml((String) value.getValue() ) );
+                getDetailTextView().setText(new HtmlSpanner().fromHtml((String) value.getValue() ));
             } else {
                 getDetailTextView().setText(String.valueOf(value.getValue() ) );
 
@@ -98,8 +99,6 @@ public class FormDetailTextInlineFieldCell extends FormTitleFieldCell {
 
         // Fetch the resource, color or text defined in your style
         int styleItem = ta.getResourceId(0, defValue); // android.R.attr.textAppearanceMediumInverse);
-        //int textColor = ta.getColor(1, Color.BLACK);
-        //String text = ta.getString(2);
 
         // Recycle the TypedArray
         ta.recycle();

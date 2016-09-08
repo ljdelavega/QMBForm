@@ -10,9 +10,12 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.text.Html;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+
+import net.nightwhistler.htmlspanner.HtmlSpanner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,11 +65,13 @@ public class FormTextPickerDialogFieldCell extends FormEditTextFieldCell {
             getRowDescriptor().getDataSource().loadData(new DataSourceListener() {
                 @Override
                 public void onDataSourceLoaded(List list) {
-                    CharSequence title = getRowDescriptor().getTitle();
+                    final CharSequence title = getRowDescriptor().getTitle();
+                    CharSequence requiredSuffix = "";
                     if (getRowDescriptor().getRequired())
                     {
-                        title = Html.fromHtml((title + " <sup><font color='red'>*</font></sup>"));
+                        requiredSuffix = new HtmlSpanner().fromHtml((" <sup><font color='red'>*</font></sup>"));
                     }
+                    final CharSequence finalTitle = TextUtils.concat(title, requiredSuffix);
 
                     if (list.size() > 0) {
                         final ArrayAdapter adapter = new ArrayAdapter(getContext(), android.R.layout.simple_selectable_list_item, list);
@@ -81,7 +86,7 @@ public class FormTextPickerDialogFieldCell extends FormEditTextFieldCell {
                                 dialog.dismiss();
                             }
                         })
-                                .setTitle(title);
+                                .setTitle(finalTitle);
 
                         AlertDialog dialog = builder.create();
                         dialog.show();

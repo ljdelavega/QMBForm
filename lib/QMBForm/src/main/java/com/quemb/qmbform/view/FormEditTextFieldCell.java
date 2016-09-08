@@ -2,7 +2,6 @@ package com.quemb.qmbform.view;
 
 import com.quemb.qmbform.R;
 import com.quemb.qmbform.descriptor.CellDescriptor;
-import com.quemb.qmbform.descriptor.FormItemDescriptor;
 import com.quemb.qmbform.descriptor.RowDescriptor;
 import com.quemb.qmbform.descriptor.Value;
 
@@ -24,6 +23,8 @@ public class FormEditTextFieldCell extends FormTitleFieldCell {
     public final static String CELL_CONFIG_MIN_LINES = "EditText.minLines";
     public final static String CELL_CONFIG_INPUT_TYPE = "EditText.inputType";
     public final static String CELL_CONFIG_GRAVITY = "EditText.gravity";
+    public final static String CELL_CONFIG_MASK = "EditText.mask";
+    public final static String CELL_CONFIG_DISPLAY_MASK = "EditText.displayMask";
 
     private EditText mEditView;
 
@@ -116,6 +117,18 @@ public class FormEditTextFieldCell extends FormTitleFieldCell {
             if (config.containsKey(CELL_CONFIG_GRAVITY)) {
                 final Integer gravity = (Integer) config.get(CELL_CONFIG_GRAVITY);
                 mEditView.setGravity(gravity);
+            }
+
+            if (config.containsKey(CELL_CONFIG_MASK)) {
+                final String mask = (String) config.get(CELL_CONFIG_MASK);
+                //TODO: enhance by using the mask to display format of input to user
+
+            }
+
+            if (config.containsKey(CELL_CONFIG_DISPLAY_MASK)) {
+                final String displayMask = (String) config.get(CELL_CONFIG_DISPLAY_MASK);
+                // TODO: Do we need this? display mask seems to just be like a hint / error message
+
             }
         }
 

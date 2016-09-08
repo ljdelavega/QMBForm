@@ -9,9 +9,12 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
 import android.text.Html;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
+
+import net.nightwhistler.htmlspanner.HtmlSpanner;
 
 /**
  * Created by tonimoeckel on 15.07.14.
@@ -50,14 +53,15 @@ public class FormBooleanFieldCell extends FormBaseCell {
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     @Override
     protected void update() {
-
-        CharSequence title = getFormItemDescriptor().getTitle();
+        final CharSequence title = getRowDescriptor().getTitle();
+        CharSequence requiredSuffix = "";
         if (getRowDescriptor().getRequired())
         {
-            title = Html.fromHtml((title + " <sup><font color='red'>*</font></sup>"));
+            requiredSuffix = new HtmlSpanner().fromHtml((" <sup><font color='red'>*</font></sup>"));
         }
+        final CharSequence finalTitle = TextUtils.concat(title, requiredSuffix);
 
-        mSwitch.setText(title);
+        mSwitch.setText(finalTitle);
         if (getRowDescriptor().getDisabled())
         {
             mSwitch.setEnabled(false);

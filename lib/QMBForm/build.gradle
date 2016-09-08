@@ -41,7 +41,12 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:23.3.0'
     compile 'info.hoang8f:android-segmented:1.0.5'
+
+    // Signature input library
     compile 'com.github.gcacace:signature-pad:1.2.0'
+
+    // HTML Rendering Library
+    compile project(':lib:HtmlSpanner')
 
     testCompile 'junit:junit:4.12'
     testCompile 'org.hamcrest:hamcrest-core:1.2.1'

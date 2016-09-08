@@ -7,9 +7,12 @@ import com.quemb.qmbform.descriptor.Value;
 
 import android.content.Context;
 import android.text.Html;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+
+import net.nightwhistler.htmlspanner.HtmlSpanner;
 
 /**
  * Created by tonimoeckel on 15.07.14.
@@ -47,14 +50,15 @@ public class FormCheckFieldCell extends FormBaseCell {
 
     @Override
     protected void update() {
-
-        CharSequence title = getFormItemDescriptor().getTitle();
+        final CharSequence title = getRowDescriptor().getTitle();
+        CharSequence requiredSuffix = "";
         if (getRowDescriptor().getRequired())
         {
-            title = Html.fromHtml((title + " <sup><font color='red'>*</font></sup>"));
+            requiredSuffix = new HtmlSpanner().fromHtml((" <sup><font color='red'>*</font></sup>"));
         }
+        final CharSequence finalTitle = TextUtils.concat(title, requiredSuffix);
 
-        mCheckBox.setText(title);
+        mCheckBox.setText(finalTitle);
         if (getRowDescriptor().getDisabled())
         {
             mCheckBox.setEnabled(false);

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.Image;
 import android.text.Html;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -15,6 +16,8 @@ import com.quemb.qmbform.descriptor.CellDescriptor;
 import com.quemb.qmbform.descriptor.RowDescriptor;
 import com.quemb.qmbform.descriptor.SignatureValue;
 import com.quemb.qmbform.descriptor.Value;
+
+import net.nightwhistler.htmlspanner.HtmlSpanner;
 
 import java.text.DateFormat;
 import java.util.Calendar;
@@ -69,13 +72,15 @@ public class FormSignatureFieldCell extends FormBaseCell {
 
     @Override
     protected void update() {
-
-        CharSequence title = getRowDescriptor().getTitle();
+        final CharSequence title = getRowDescriptor().getTitle();
+        CharSequence requiredSuffix = "";
         if (getRowDescriptor().getRequired())
         {
-            title = Html.fromHtml((title + " <sup><font color='red'>*</font></sup>"));
+            requiredSuffix = new HtmlSpanner().fromHtml((" <sup><font color='red'>*</font></sup>"));
         }
-        mTextView.setText(title);
+        final CharSequence finalTitle = TextUtils.concat(title, requiredSuffix);
+
+        mTextView.setText(finalTitle);
         mTextView.setVisibility(title == null ? GONE : VISIBLE);
 
         @SuppressWarnings("unchecked") Value<SignatureValue> value = (Value<SignatureValue>) getRowDescriptor().getValue();

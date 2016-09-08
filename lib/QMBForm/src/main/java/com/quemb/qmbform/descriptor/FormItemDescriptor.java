@@ -5,6 +5,8 @@ import android.text.Html;
 import com.quemb.qmbform.OnFormRowClickListener;
 import com.quemb.qmbform.view.Cell;
 
+import net.nightwhistler.htmlspanner.HtmlSpanner;
+
 import java.util.HashMap;
 
 /**
@@ -23,7 +25,10 @@ public class FormItemDescriptor {
 
 
     public CharSequence getTitle() {
-        return Html.fromHtml(mTitle.toString());
+        if (mTitle != null) {
+            return new HtmlSpanner().fromHtml(mTitle.toString());
+        }
+        return mTitle;
     }
 
     public void setTitle(CharSequence title) {

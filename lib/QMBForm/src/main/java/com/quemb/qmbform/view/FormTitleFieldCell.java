@@ -6,8 +6,12 @@ import com.quemb.qmbform.descriptor.RowDescriptor;
 
 import android.content.Context;
 import android.text.Html;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
+
+import net.nightwhistler.htmlspanner.HtmlSpanner;
+import net.nightwhistler.htmlspanner.TextUtil;
 
 /**
  * Created by tonimoeckel on 15.07.14.
@@ -35,12 +39,15 @@ public class FormTitleFieldCell extends FormBaseCell {
 
     @Override
     protected void update() {
-        CharSequence title = getRowDescriptor().getTitle();
+        final CharSequence title = getRowDescriptor().getTitle();
+        CharSequence requiredSuffix = "";
         if (getRowDescriptor().getRequired())
         {
-            title = Html.fromHtml((title + " <sup><font color='red'>*</font></sup>"));
+            requiredSuffix = new HtmlSpanner().fromHtml((" <sup><font color='red'>*</font></sup>"));
         }
-        mTextView.setText(title);
+        final CharSequence finalTitle = TextUtils.concat(title, requiredSuffix);
+
+        mTextView.setText(finalTitle);
         mTextView.setVisibility(title == null ? GONE : VISIBLE);
 
 

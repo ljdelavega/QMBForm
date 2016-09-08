@@ -8,12 +8,15 @@ import com.quemb.qmbform.descriptor.Value;
 
 import android.content.Context;
 import android.text.Html;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+
+import net.nightwhistler.htmlspanner.HtmlSpanner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,12 +54,14 @@ public class FormSelectorSegmentedControlFieldCell extends FormBaseCell {
     protected void update() {
         mSegmentedGroup.removeAllViews();
 
-        CharSequence title = getRowDescriptor().getTitle();
+        final CharSequence title = getRowDescriptor().getTitle();
+        CharSequence requiredSuffix = "";
         if (getRowDescriptor().getRequired())
         {
-            title = Html.fromHtml((title + " <sup><font color='red'>*</font></sup>"));
+            requiredSuffix = new HtmlSpanner().fromHtml((" <sup><font color='red'>*</font></sup>"));
         }
-        mTextView.setText(title);
+        final CharSequence finalTitle = TextUtils.concat(title, requiredSuffix);
+        mTextView.setText(finalTitle);
 
         List<FormOptionsObject> selectorOptions = getRowDescriptor().getSelectorOptions();
         for (FormOptionsObject option : selectorOptions) {

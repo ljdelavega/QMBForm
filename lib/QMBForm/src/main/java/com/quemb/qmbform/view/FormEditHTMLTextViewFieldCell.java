@@ -6,6 +6,8 @@ import com.quemb.qmbform.descriptor.Value;
 import android.content.Context;
 import android.text.Html;
 
+import net.nightwhistler.htmlspanner.HtmlSpanner;
+
 /**
  * Created by tonimoeckel on 15.07.14.
  */
@@ -22,7 +24,7 @@ public class FormEditHTMLTextViewFieldCell extends FormEditTextViewFieldCell {
         if (value != null && value.getValue() != null) {
             String valueString = value.getValue();
             if (valueString != null) {
-                valueString = Html.fromHtml(valueString).toString();
+                valueString = new HtmlSpanner().fromHtml(valueString).toString();
             }
             getEditView().setText(valueString);
         }
