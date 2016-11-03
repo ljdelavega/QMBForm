@@ -1,61 +1,52 @@
 package com.quemb.qmbform.view;
 
+import android.content.Context;
+import android.util.Log;
+
 import com.quemb.qmbform.descriptor.RowDescriptor;
 import com.quemb.qmbform.descriptor.Value;
 
-import android.content.Context;
-import android.text.InputType;
-import android.util.Log;
-import android.widget.EditText;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by tonimoeckel on 15.07.14.
  */
-public class FormEditIntegerFieldCell extends FormEditTextFieldCell {
+public class FormEditIntegerFieldCell extends FormEditNumberFieldCell {
+    private static final Logger LOGGER = Logger.getLogger(FormEditIntegerFieldCell.class.getName());
 
-    private static final String TAG = "FormEditIntegerCell";
-
-    private EditText mEditView;
-
-    public FormEditIntegerFieldCell(Context context,
-                                    RowDescriptor rowDescriptor) {
+    public FormEditIntegerFieldCell(Context context, RowDescriptor rowDescriptor) {
         super(context, rowDescriptor);
     }
 
-
-    @Override
-    protected void init() {
-        super.init();
-
-        mEditView = getEditView();
-        mEditView.setInputType(InputType.TYPE_CLASS_NUMBER);
-    }
-
-
-    @Override
-    protected void updateEditView() {
-
-        @SuppressWarnings("unchecked") Value<Integer> value = (Value<Integer>) getRowDescriptor().getValue();
-        if (value != null) {
-            String valueString = String.valueOf(value.getValue());
-            getEditView().setText(valueString);
-        }
-
-    }
-
-
-    protected void onEditTextChanged(String string) {
-
+    protected BigInteger textToValue(String text) {
         try {
-            Integer value = Integer.parseInt(string);
-            onValueChanged(new Value<Integer>(value));
-        } catch (NumberFormatException e) {
-            Log.e(TAG, e.getMessage(), e);
+            return new BigInteger(text);
+        } catch (Exception e) {
+            LOGGER.log(Level.WARNING, "Unable to convert text to value", e);
+            return null;
         }
-
     }
 
-    public EditText getEditText() {
-        return mEditView;
+    @Override
+    protected String valueToFormattedText(Value<?> value) {
+        final String text;
+        if (value == null || value.getValue() == null) {
+            text = "";
+        } else {
+            final DecimalFormat formatter;
+            if (pattern != null) {
+                formatter = new DecimalFormat(pattern);
+            } else {
+                formatter = new DecimalFormat("#");
+            }
+            formatter.setParseBigDecimal(true);
+            text = formatter.format(value.getValue());
+        }
+        return text;
     }
 }

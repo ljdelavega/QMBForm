@@ -6,6 +6,7 @@ import com.quemb.qmbform.descriptor.Value;
 import android.content.Context;
 import android.util.Log;
 
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
 
@@ -14,42 +15,18 @@ import java.text.ParseException;
  */
 public class FormEditCurrencyFieldCell extends FormEditNumberFieldCell {
 
-    private static final String TAG = "FormEditCurrencyFieldCell";
-
-    public FormEditCurrencyFieldCell(Context context,
-                                     RowDescriptor rowDescriptor) {
+    public FormEditCurrencyFieldCell(Context context, RowDescriptor rowDescriptor) {
         super(context, rowDescriptor);
     }
 
-
-    @Override
-    protected void updateEditView() {
-
-        @SuppressWarnings("unchecked") Value<Number> value = (Value<Number>) getRowDescriptor().getValue();
-        if (value != null && value.getValue() != null) {
-            NumberFormat format = NumberFormat.getCurrencyInstance();
-            String valueString = format.format(value.getValue());//String.valueOf(value.getValue());
-            getEditView().setText(valueString);
+    protected String valueToFormattedText(Value<?> value) {
+        final String text;
+        if (value == null || value.getValue() == null) {
+            text = "";
+        } else {
+            text = NumberFormat.getCurrencyInstance().format(value.getValue());
         }
-
-    }
-
-
-    protected void onEditTextChanged(String string) {
-
-        try {
-            NumberFormat format = NumberFormat.getCurrencyInstance();
-            Number floatValue = (Number) format.parse(string);
-            onValueChanged(new Value<Number>(floatValue));
-        } catch (NumberFormatException e) {
-            Log.e(TAG, e.getMessage(), e);
-        } catch (ParseException e) {
-            Log.e(TAG, e.getMessage(), e);
-        } catch (ClassCastException e) {
-            Log.e(TAG, e.getMessage(), e);
-        }
-
-
+        return text;
     }
 
 }
