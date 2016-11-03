@@ -22,7 +22,8 @@
         android:ems="10"
         android:ellipsize="end"
         android:gravity="right"
-        android:background="@null"/>
+        android:background="@null"
+        android:imeOptions="flagNoExtractUi"/>
 
 
 </LinearLayout>

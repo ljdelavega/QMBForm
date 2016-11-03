@@ -22,7 +22,8 @@
         android:background="@null"
         android:ellipsize="end"
         android:gravity="right"
-        android:inputType="text"/>
+        android:inputType="text"
+        android:imeOptions="flagNoExtractUi"/>
 
 
 </LinearLayout>

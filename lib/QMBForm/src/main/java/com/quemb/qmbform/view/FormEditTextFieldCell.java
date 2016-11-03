@@ -21,6 +21,7 @@ import java.util.HashMap;
 public class FormEditTextFieldCell extends FormTitleFieldCell {
 
     public final static String CELL_CONFIG_MIN_LINES = "EditText.minLines";
+    public final static String CELL_CONFIG_MAX_LINES = "EditText.maxLines";
     public final static String CELL_CONFIG_INPUT_TYPE = "EditText.inputType";
     public final static String CELL_CONFIG_GRAVITY = "EditText.gravity";
     public final static String CELL_CONFIG_MASK = "EditText.mask";
@@ -114,6 +115,11 @@ public class FormEditTextFieldCell extends FormTitleFieldCell {
                 mEditView.setMinLines(minLines);
             }
 
+            if (config.containsKey(CELL_CONFIG_MAX_LINES)) {
+                final Integer maxLines = (Integer) config.get(CELL_CONFIG_MAX_LINES);
+                mEditView.setMaxLines(maxLines);
+            }
+
             if (config.containsKey(CELL_CONFIG_GRAVITY)) {
                 final Integer gravity = (Integer) config.get(CELL_CONFIG_GRAVITY);
                 mEditView.setGravity(gravity);
@@ -133,12 +139,13 @@ public class FormEditTextFieldCell extends FormTitleFieldCell {
         }
 
 
-        @SuppressWarnings("unchecked") Value<String> value = (Value<String>) getRowDescriptor().getValue();
+        @SuppressWarnings("unchecked") Value<?> value = (Value<?>) getRowDescriptor().getValue();
         if (value != null && value.getValue() != null) {
-            String valueString = value.getValue();
+            String valueString = value.getValue().toString();
             mEditView.setText(valueString);
+        } else {
+            mEditView.setText("");
         }
-
     }
 
     public EditText getEditView() {

@@ -19,7 +19,8 @@
         android:ellipsize="end"
         android:gravity="right"
         android:background="@null"
-        android:id="@+id/editText"/>
+        android:id="@+id/editText"
+        android:imeOptions="flagNoExtractUi"/>
 
 
 </LinearLayout>
