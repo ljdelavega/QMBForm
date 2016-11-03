@@ -4,6 +4,7 @@ import com.quemb.qmbform.descriptor.FormItemDescriptor;
 import com.quemb.qmbform.descriptor.RowDescriptor;
 import com.quemb.qmbform.descriptor.SectionDescriptor;
 import com.quemb.qmbform.view.Cell;
+import com.quemb.qmbform.view.FormBarcodeFieldCell;
 import com.quemb.qmbform.view.FormBaseCell;
 import com.quemb.qmbform.view.FormBooleanFieldCell;
 import com.quemb.qmbform.view.FormButtonFieldCell;
@@ -32,7 +33,9 @@ import com.quemb.qmbform.view.FormEditTextViewFieldCell;
 import com.quemb.qmbform.view.FormEditTextViewInlineFieldCell;
 import com.quemb.qmbform.view.FormEditURLFieldCell;
 import com.quemb.qmbform.view.FormExternalButtonFieldCell;
+import com.quemb.qmbform.view.FormExternalPickerInlineFieldCell;
 import com.quemb.qmbform.view.FormIntegerSliderFieldCell;
+import com.quemb.qmbform.view.FormLocationFieldCell;
 import com.quemb.qmbform.view.FormPickerDialogFieldCell;
 import com.quemb.qmbform.view.FormPickerDialogVerticalFieldCell;
 import com.quemb.qmbform.view.FormSelectorSegmentedControlFieldCell;
@@ -43,6 +46,7 @@ import com.quemb.qmbform.view.FormSpinnerInlineFieldCell;
 import com.quemb.qmbform.view.FormTextPickerDialogFieldCell;
 import com.quemb.qmbform.view.FormTimeDialogFieldCell;
 import com.quemb.qmbform.view.FormTimeInlineFieldCell;
+import com.quemb.qmbform.view.FormTriStateCheckFieldCell;
 import com.quemb.qmbform.view.SectionCell;
 import com.quemb.qmbform.view.SeperatorSectionCell;
 
@@ -87,6 +91,7 @@ public class CellViewFactory {
         mViewRowTypeMap.put(RowDescriptor.FormRowDescriptorTypeTextViewInline, FormEditTextViewInlineFieldCell.class);
         mViewRowTypeMap.put(RowDescriptor.FormRowDescriptorTypeBooleanSwitch, currentapiVersion >= Build.VERSION_CODES.ICE_CREAM_SANDWICH ? FormBooleanFieldCell.class : FormCheckFieldCell.class);
         mViewRowTypeMap.put(RowDescriptor.FormRowDescriptorTypeBooleanCheck, FormCheckFieldCell.class);
+        mViewRowTypeMap.put(RowDescriptor.FormRowDescriptorTypeTriStateCheck, FormTriStateCheckFieldCell.class);
         mViewRowTypeMap.put(RowDescriptor.FormRowDescriptorTypeButton, FormButtonFieldCell.class);
         mViewRowTypeMap.put(RowDescriptor.FormRowDescriptorTypeButtonInline, FormButtonInlineFieldCell.class);
         mViewRowTypeMap.put(RowDescriptor.FormRowDescriptorTypeDate, FormDateDialogFieldCell.class);
@@ -119,6 +124,9 @@ public class CellViewFactory {
         mViewRowTypeMap.put(RowDescriptor.FormRowDescriptorTypeSectionSeperator, SeperatorSectionCell.class);
         mViewRowTypeMap.put(RowDescriptor.FormRowDescriptorTypeHtmlVertical, FormDetailHtmlTextVerticalFieldCell.class);
         mViewRowTypeMap.put(RowDescriptor.FormRowDescriptorTypeSignature, FormSignatureFieldCell.class);
+        mViewRowTypeMap.put(RowDescriptor.FormRowDescriptorTypeBarcodeScanner, FormBarcodeFieldCell.class);
+        mViewRowTypeMap.put(RowDescriptor.FormRowDescriptorTypeExternalPickerInline, FormExternalPickerInlineFieldCell.class);
+        mViewRowTypeMap.put(RowDescriptor.FormRowDescriptorTypeLocationPicker, FormLocationFieldCell.class);
     }
 
     public Cell createViewForFormItemDescriptor(Context context, FormItemDescriptor descriptor) {

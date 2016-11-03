@@ -2,38 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:padding="@dimen/qmb_padding">
-
-
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_above="@+id/buttons_container"
-        android:id="@+id/signature_pad_container">
-
-        <FrameLayout
-            android:layout_width="fill_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/darker_gray"
-            android:layout_marginBottom="8dp"
-            android:layout_above="@+id/signature_pad_description" />
-
-        <TextView
-            android:id="@+id/signature_pad_description"
-            android:layout_width="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_height="wrap_content"
-            android:textColor="@android:color/darker_gray"
-            android:layout_marginBottom="16dp"
-            android:layout_alignParentBottom="true"
-            android:text="@string/agreement" />
-
-        <com.github.gcacace.signaturepad.views.SignaturePad
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:id="@+id/signature_pad" />
-    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/buttons_container"
@@ -57,7 +27,65 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="@string/save_signature"
-            android:enabled="false" />
+            android:enabled="true" />
     </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:paddingTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/buttons_container"
+        android:id="@+id/input_container">
+
+        <FrameLayout
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"
+            android:id="@+id/frameLayout"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:id="@+id/name_field"
+            android:hint="@string/name_entry_hint"
+            android:maxLines="1"
+            android:textAlignment="center"
+            android:gravity="center"/>
+        <TextView
+            android:id="@+id/date_field"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/date_entry_hint"
+            android:textAlignment="center"
+            android:gravity="center"/>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/signature_pad_container"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/input_container">
+
+        <com.github.gcacace.signaturepad.views.SignaturePad
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/signature_pad"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:id="@+id/disclaimer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/darker_gray"
+            android:text="@string/agreement"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
+
+    </RelativeLayout>
 
 </RelativeLayout>

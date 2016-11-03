@@ -3,49 +3,49 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:orientation="horizontal"
+              android:orientation="vertical"
               android:padding="@dimen/qmb_padding">
 
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="3"
         android:paddingRight="10dp"/>
 
     <LinearLayout
         android:id="@+id/signatureView"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="match_parent"
-            android:layout_height="70dp" />
+            android:layout_height="wrap_content" />
 
-        <EditText
+        <TextView
             android:id="@+id/nameText"
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_weight="5"
             android:ems="10"
             android:ellipsize="end"
             android:background="@null"
-            android:hint="@string/name_entry_hint"/>
+            android:hint="@string/name_entry_hint"
+            android:gravity="right"/>
 
-        <EditText
+        <TextView
             android:id="@+id/dateText"
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_weight="5"
             android:ems="10"
             android:ellipsize="end"
             android:background="@null"
-            android:hint="@string/date_entry_hint"/>
-
-
+            android:hint="@string/date_entry_hint"
+            android:gravity="right"/>
 
     </LinearLayout>
 

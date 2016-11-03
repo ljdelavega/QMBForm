@@ -43,6 +43,7 @@ public class FormManager implements OnFormRowChangeListener, OnFormRowValueChang
         mFormDescriptor = formDescriptor;
         mFormDescriptor.setOnFormRowChangeListener(this);
         mFormDescriptor.setOnFormRowValueChangedListener(this);
+        mFormDescriptor.setFormManager(this);
 
         mAdapter = FormAdapter.newInstance(mFormDescriptor, context);
         listView.setAdapter(mAdapter);

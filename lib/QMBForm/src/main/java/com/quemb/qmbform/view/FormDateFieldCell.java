@@ -36,7 +36,6 @@ public class FormDateFieldCell extends FormDetailTextInlineFieldCell {
         super.init();
 
         mTextView = (TextView) findViewById(R.id.textView);
-
         setStyleId(mTextView, CellDescriptor.APPEARANCE_TEXT_LABEL, CellDescriptor.COLOR_LABEL);
     }
 
@@ -47,10 +46,10 @@ public class FormDateFieldCell extends FormDetailTextInlineFieldCell {
 
     @Override
     protected void update() {
+        super.update();
         final CharSequence title = getRowDescriptor().getTitle();
         CharSequence requiredSuffix = "";
-        if (getRowDescriptor().getRequired())
-        {
+        if (getRowDescriptor().getRequired()) {
             requiredSuffix = new HtmlSpanner().fromHtml((" <sup><font color='red'>*</font></sup>"));
         }
         final CharSequence finalTitle = TextUtils.concat(title, requiredSuffix);
@@ -71,8 +70,7 @@ public class FormDateFieldCell extends FormDetailTextInlineFieldCell {
 
         initDatePicker(calendar);
 
-        if (getRowDescriptor().getDisabled())
-        {
+        if (getRowDescriptor().getDisabled()) {
             setTextColor(mTextView, CellDescriptor.COLOR_LABEL_DISABLED);
 
             setClickable(false);
@@ -89,6 +87,7 @@ public class FormDateFieldCell extends FormDetailTextInlineFieldCell {
         updateDateLabel(date, false);
 
         onValueChanged(new Value<Date>(date));
+
     }
 
     protected void updateDateLabel(Date date, boolean disabled) {
@@ -96,8 +95,7 @@ public class FormDateFieldCell extends FormDetailTextInlineFieldCell {
 
         if (date == null) {
             editView.setText("");
-        }
-        else {
+        } else {
             String label = DateFormat.getDateInstance().format(date);
 
             final HashMap<String, Object> config = getRowDescriptor().getCellConfig();
@@ -116,12 +114,13 @@ public class FormDateFieldCell extends FormDetailTextInlineFieldCell {
             editView.setText(label);
         }
 
-        if (disabled)
-        {
+        if (disabled) {
             editView.setEnabled(false);
             setTextColor(editView, CellDescriptor.COLOR_VALUE_DISABLED);
         }
 
+        // update the view.
+        this.getRowDescriptor().getSectionDescriptor().getFormDescriptor().getFormManager().updateRows();
     }
 
     @Override

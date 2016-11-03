@@ -4,66 +4,93 @@ package com.quemb.qmbform.view;
  * Created by delavegal on 16-08-15.
  */
 
-import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.net.Uri;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.os.Environment;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.util.Log;
+import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.github.gcacace.signaturepad.views.SignaturePad;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
+import java.io.ByteArrayOutputStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Logger;
 
 import com.quemb.qmbform.R;
 
-public class SignatureActivity extends Activity {
+import net.nightwhistler.htmlspanner.HtmlSpanner;
 
-    private static final int REQUEST_EXTERNAL_STORAGE = 1;
-    private static String[] PERMISSIONS_STORAGE = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
+public class SignatureActivity extends Activity {
+    private static final Logger LOGGER = Logger.getLogger(SignatureActivity.class.getName());
+
+    public static final String SIGNATURE_NAME = "signatureName";
+    public static final String SIGNATURE_DATE = "signatureDate";
+    public static final String SIGNATURE_BASE64 = "signatureBase64";
+
+    private static final String SIGNATURE_SAVED_STATE = "signatureSavedState";
+    private static final String SIGNATURE_SAVED_HEIGHT = "signatureSavedHeight";
+    private static final String SIGNATURE_SAVED_WIDTH = "signatureSavedWidth";
+
+    private TextView mDisclaimerField;
     private SignaturePad mSignaturePad;
+    private EditText mNameField;
+    private TextView mDateField;
     private Button mClearButton;
     private Button mSaveButton;
+
+    private String mDisclaimer;
+    private String mSavedSignatureState;
+    private int mSavedHeight;
+    private int mSavedWidth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        verifyStoragePermissions(this);
         setContentView(R.layout.signature_activity);
 
         mSignaturePad = (SignaturePad) findViewById(R.id.signature_pad);
         mSignaturePad.setOnSignedListener(new SignaturePad.OnSignedListener() {
             @Override
             public void onStartSigning() {
-                Toast.makeText(SignatureActivity.this, "OnStartSigning", Toast.LENGTH_SHORT).show();
+
             }
 
             @Override
             public void onSigned() {
-                mSaveButton.setEnabled(true);
                 mClearButton.setEnabled(true);
             }
 
             @Override
             public void onClear() {
-                mSaveButton.setEnabled(false);
                 mClearButton.setEnabled(false);
             }
         });
+
+        mDisclaimerField = (TextView) findViewById(R.id.disclaimer);
+        mNameField = (EditText) findViewById(R.id.name_field);
+        mDateField = (TextView) findViewById(R.id.date_field);
+
+        final Intent intent = getIntent();
+        if (intent != null) {
+            if (intent.hasExtra("disclaimer") ) {
+                mDisclaimer = intent.getStringExtra("disclaimer");
+                mDisclaimerField.setText(new HtmlSpanner().fromHtml(mDisclaimer));
+            }
+        }
+
+        // Set date to today's date.
+        Date date = new Date();
+        final DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+        mDateField.setText(df.format(date));
 
         mClearButton = (Button) findViewById(R.id.clear_button);
         mSaveButton = (Button) findViewById(R.id.save_button);
@@ -72,117 +99,137 @@ public class SignatureActivity extends Activity {
             @Override
             public void onClick(View view) {
                 mSignaturePad.clear();
+                mNameField.setText("");
             }
         });
-
         mSaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Bitmap signatureBitmap = mSignaturePad.getSignatureBitmap();
-                if (addJpgSignatureToGallery(signatureBitmap)) {
-                    Toast.makeText(SignatureActivity.this, "Signature saved into the Gallery", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(SignatureActivity.this, "Unable to store the signature", Toast.LENGTH_SHORT).show();
+                if (!mSignaturePad.isEmpty()) {
+                    if (mNameField.getText().length() < 1) {
+                        new AlertDialog.Builder(SignatureActivity.this)
+                                .setTitle(R.string.signature_name_required)
+                                .setMessage(R.string.signature_name_required_message)
+                                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        // do nothing, just dismiss.
+                                    }
+                                })
+                                .setIcon(android.R.drawable.ic_dialog_alert)
+                                .show();
+                    }
+                    else {
+                        //Encode bitmap to Base64 string and save everything in intent extras to be returned to cell.
+                        Bitmap signatureBitmap = mSignaturePad.getTransparentSignatureBitmap(true);
+                        final String base64Signature = encodeBitmapToString(signatureBitmap);
+
+                        // Set date to today's date.
+                        Date date = new Date();
+                        final long dateLong = date.getTime();
+
+                        Intent resultIntent = new Intent();
+                        resultIntent.putExtra(SIGNATURE_NAME, mNameField.getText().toString());
+                        resultIntent.putExtra(SIGNATURE_DATE, dateLong);
+                        resultIntent.putExtra(SIGNATURE_BASE64, base64Signature);
+                        setResult(Activity.RESULT_OK, resultIntent);
+                        finish();
+                    }
                 }
-                if (addSvgSignatureToGallery(mSignaturePad.getSignatureSvg())) {
-                    Toast.makeText(SignatureActivity.this, "SVG Signature saved into the Gallery", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(SignatureActivity.this, "Unable to store the SVG signature", Toast.LENGTH_SHORT).show();
+                else {
+                    // send null result back to cell.
+                    Intent resultIntent = new Intent();
+                    setResult(Activity.RESULT_OK, resultIntent);
+                    finish();
                 }
             }
         });
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           @NonNull String permissions[], @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case REQUEST_EXTERNAL_STORAGE: {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length <= 0
-                        || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(SignatureActivity.this, "Cannot write images to external storage", Toast.LENGTH_SHORT).show();
-                }
+    protected void onSaveInstanceState(Bundle outState) {
+        if (!mSignaturePad.isEmpty()) {
+            //Encode bitmap to Base64 string and save in bundle to be restored later.
+            Bitmap signatureBitmap = mSignaturePad.getTransparentSignatureBitmap(true);
+            if (signatureBitmap != null) {
+                String base64Signature = encodeBitmapToString(signatureBitmap);
+                int height = signatureBitmap.getHeight();
+                int width = signatureBitmap.getWidth();
+
+                outState.putString(SIGNATURE_SAVED_STATE, base64Signature);
+                outState.putInt(SIGNATURE_SAVED_HEIGHT, height);
+                outState.putInt(SIGNATURE_SAVED_WIDTH, width);
             }
         }
+        super.onSaveInstanceState(outState);
     }
 
-    public File getAlbumStorageDir(String albumName) {
-        // Get the directory for the user's public pictures directory.
-        File file = new File(Environment.getExternalStoragePublicDirectory(
-                Environment.DIRECTORY_PICTURES), albumName);
-        if (!file.mkdirs()) {
-            Log.e("SignaturePad", "Directory not created");
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        if (savedInstanceState.containsKey(SIGNATURE_SAVED_STATE)) {
+            mSavedSignatureState = savedInstanceState.getString(SIGNATURE_SAVED_STATE);
+            mSavedWidth = savedInstanceState.getInt(SIGNATURE_SAVED_WIDTH);
+            mSavedHeight = savedInstanceState.getInt(SIGNATURE_SAVED_HEIGHT);
+
+            final byte[] decodedBytes = Base64.decode(mSavedSignatureState, Base64.DEFAULT);
+            Bitmap savedSignature = decodeSampledBitmapFromResource(decodedBytes, mSavedWidth, mSavedHeight);
+
+            mSignaturePad.setSignatureBitmap(savedSignature);
         }
-        return file;
     }
 
-    public void saveBitmapToJPG(Bitmap bitmap, File photo) throws IOException {
-        Bitmap newBitmap = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(newBitmap);
-        canvas.drawColor(Color.WHITE);
-        canvas.drawBitmap(bitmap, 0, 0, null);
-        OutputStream stream = new FileOutputStream(photo);
-        newBitmap.compress(Bitmap.CompressFormat.JPEG, 80, stream);
-        stream.close();
-    }
-
-    public boolean addJpgSignatureToGallery(Bitmap signature) {
-        boolean result = false;
-        try {
-            File photo = new File(getAlbumStorageDir("SignaturePad"), String.format("Signature_%d.jpg", System.currentTimeMillis()));
-            saveBitmapToJPG(signature, photo);
-            scanMediaFile(photo);
-            result = true;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return result;
-    }
-
-    private void scanMediaFile(File photo) {
-        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-        Uri contentUri = Uri.fromFile(photo);
-        mediaScanIntent.setData(contentUri);
-        SignatureActivity.this.sendBroadcast(mediaScanIntent);
-    }
-
-    public boolean addSvgSignatureToGallery(String signatureSvg) {
-        boolean result = false;
-        try {
-            File svgFile = new File(getAlbumStorageDir("SignaturePad"), String.format("Signature_%d.svg", System.currentTimeMillis()));
-            OutputStream stream = new FileOutputStream(svgFile);
-            OutputStreamWriter writer = new OutputStreamWriter(stream);
-            writer.write(signatureSvg);
-            writer.close();
-            stream.flush();
-            stream.close();
-            scanMediaFile(svgFile);
-            result = true;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return result;
+    private String encodeBitmapToString(Bitmap bitmap) {
+        final ByteArrayOutputStream signatureOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, signatureOutputStream);
+        return Base64.encodeToString(signatureOutputStream.toByteArray(), Base64.DEFAULT);
     }
 
     /**
-     * Checks if the app has permission to write to device storage
-     * <p/>
-     * If the app does not has permission then the user will be prompted to grant permissions
-     *
-     * @param activity the activity from which permissions are checked
+     * Helper function to decode a bitmap from a byte array and scale it down to specified req width and height.
+     * See https://developer.android.com/training/displaying-bitmaps/load-bitmap.html
+     * @param data
+     * @param reqWidth
+     * @param reqHeight
+     * @return
      */
-    public static void verifyStoragePermissions(Activity activity) {
-        // Check if we have write permission
-        int permission = ActivityCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+    private Bitmap decodeSampledBitmapFromResource(byte[] data, int reqWidth, int reqHeight) {
+        // First decode with inJustDecodeBounds=true to check dimensions
+        final BitmapFactory.Options onlyBoundsOptions = new BitmapFactory.Options();
+        onlyBoundsOptions.inJustDecodeBounds = true;
+        onlyBoundsOptions.inPreferredConfig = Bitmap.Config.ARGB_8888;
+        BitmapFactory.decodeByteArray(data, 0, data.length, onlyBoundsOptions);
 
-        if (permission != PackageManager.PERMISSION_GRANTED) {
-            // We don't have permission so prompt the user
-            ActivityCompat.requestPermissions(
-                    activity,
-                    PERMISSIONS_STORAGE,
-                    REQUEST_EXTERNAL_STORAGE
-            );
-        }
+        final BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
+        // Calculate inSampleSize
+        bitmapOptions.inSampleSize = calculateInSampleSize(onlyBoundsOptions, reqWidth, reqHeight);
+        bitmapOptions.inJustDecodeBounds = false;
+        bitmapOptions.inPreferredConfig = Bitmap.Config.ARGB_8888;
+
+        // Decode bitmap with inSampleSize set
+        return BitmapFactory.decodeByteArray(data, 0, data.length, bitmapOptions);
     }
+
+    private int calculateInSampleSize (BitmapFactory.Options options, int reqWidth, int reqHeight) {
+        // Raw height and width of image
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+
+        int inSampleSize = 1;
+
+        if (height > reqHeight || width > reqWidth) {
+
+            final int halfHeight = height / 2;
+            final int halfWidth = width / 2;
+
+            // Calculate the largest inSampleSize value that is a power of 2 and keeps both
+            // height and width larger than the requested height and width.
+            while ((halfHeight / inSampleSize) > reqHeight
+                    && (halfWidth / inSampleSize) > reqWidth) {
+                inSampleSize *= 2;
+            }
+        }
+
+        return inSampleSize;
+    }
+
 }

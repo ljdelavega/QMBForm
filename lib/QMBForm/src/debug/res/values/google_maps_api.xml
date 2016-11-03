@@ -1,0 +1,21 @@
+<resources>
+    <!--
+    TODO: Before you run your application, you need a Google Maps API key.
+
+    To get one, follow this link, follow the directions and press "Create" at the end:
+
+    https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend&keyType=CLIENT_SIDE_ANDROID&r=4A:1B:4D:4C:C4:65:A9:4E:48:27:08:68:22:D4:6A:99:22:60:2D:C9%3Bcom.quemb.qmbform.view
+
+    You can also add your credentials to an existing key, using this line:
+    4A:1B:4D:4C:C4:65:A9:4E:48:27:08:68:22:D4:6A:99:22:60:2D:C9;com.quemb.qmbform.view
+
+    Alternatively, follow the directions here:
+    https://developers.google.com/maps/documentation/android/start#get-key
+
+    Once you have your key (it starts with "AIza"), replace the "google_maps_key"
+    string in this file.
+    -->
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">
+        AIzaSyDmnQthopsbXqK3cDVe9AyGOEuLJjbzSs8
+    </string>
+</resources>

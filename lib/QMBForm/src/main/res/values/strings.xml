@@ -12,7 +12,7 @@
     <string name="feet_label">feet</string>
     <string name="inches_label">inches</string>
     <string name="cm_label">cm</string>
-    <string name="test_error"/>
+    <string name="test_error" />
     <string name="nonpositive_number_error">must be greater than zero</string>
     <string name="signature_title">Enter Signature</string>
     <string name="name_entry_hint">Enter your name...</string>
@@ -20,4 +20,13 @@
     <string name="agreement">I agree to the terms and conditions.</string>
     <string name="clear_pad">Clear</string>
     <string name="save_signature">Save</string>
+    <string name="signature_name_required">Name Required</string>
+    <string name="signature_name_required_message">Please enter your name under the signature, or clear the signature.</string>
+    <string name="abc_camera_crosshair">crosshair for camera barcode scanning</string>
+    <string name="abc_torch_image">image for the torch control</string>
+    <string name="title_activity_location_picker">Location</string>
+    <string name="service_not_available">Geocoding Service Is Not Available</string>
+    <string name="invalid_lat_long_used">Provided Lattitude Or Longitude Is Invalid</string>
+    <string name="address_found">Address Was Found</string>
+    <string name="no_address_found">No Address Was Found Associated With Supplied Coordinates</string>
 </resources>

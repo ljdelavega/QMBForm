@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.quemb.qmbform.FormManager;
 import com.quemb.qmbform.R;
 
 /**
@@ -18,6 +19,7 @@ public class FormDescriptor {
     private ArrayList<SectionDescriptor> mSections;
     private OnFormRowValueChangedListener mOnFormRowValueChangedListener;
     private OnFormRowChangeListener mOnFormRowChangeListener;
+    private FormManager mFormManager;
 
     public static FormDescriptor newInstance() {
         return FormDescriptor.newInstance(null);
@@ -58,6 +60,10 @@ public class FormDescriptor {
     public void setCellConfig(HashMap<String, Object> cellConfig) {
         mCellConfig = cellConfig;
     }
+
+    public void setFormManager(FormManager formManager) { mFormManager = formManager; }
+
+    public FormManager getFormManager() { return mFormManager; }
 
     public void addSection(SectionDescriptor section) {
         insertSectionAtIndex(section, mSections.size());

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tracker="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <SurfaceView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/cameraView" />
+
+
+    <com.quemb.qmbform.view.TrackerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/trackerView"
+        tracker:frame_color="#22f064"
+        tracker:frame_width="5.0"/>
+
+    <ProgressBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="30dp"
+        android:id="@+id/scanProgress"
+        android:progress="0"
+        android:max="100"
+        android:visibility="visible"
+        android:progressTint="@color/wallet_holo_blue_light"
+        android:progressBackgroundTint="#e0e0e0"
+        android:progressDrawable="@android:drawable/progress_horizontal"
+        style="@android:style/Widget.ProgressBar.Horizontal"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_alignParentEnd="false" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/torchImage"
+        android:layout_toStartOf="@+id/torchToggle"
+        android:layout_marginTop="42dp"
+        android:src="@drawable/ic_light_bulb"
+        android:contentDescription="@string/abc_torch_image"
+        android:contextClickable="false"
+        android:cropToPadding="false"></ImageView>
+
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/torchToggle"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="42dp"
+        android:checked="false" />
+
+</RelativeLayout>

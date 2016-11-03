@@ -1,12 +1,10 @@
 package com.quemb.qmbform.descriptor;
 
+import android.content.Context;
+
 import com.quemb.qmbform.R;
 import com.quemb.qmbform.annotation.FormElement;
 import com.quemb.qmbform.annotation.FormValidator;
-import com.quemb.qmbform.view.Cell;
-import com.quemb.qmbform.view.FormEditTextFieldCell;
-
-import android.content.Context;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -63,6 +61,7 @@ public class RowDescriptor<T> extends FormItemDescriptor {
     public static final String FormRowDescriptorTypeDatePicker = "datePicker";
     //public static final String FormRowDescriptorTypePicker = "picker";
     public static final String FormRowDescriptorTypeBooleanCheck = "booleanCheck";
+    public static final String FormRowDescriptorTypeTriStateCheck = "triStateCheck";
     public static final String FormRowDescriptorTypeBooleanSwitch = "booleanSwitch";
     public static final String FormRowDescriptorTypeButton = "button";
     public static final String FormRowDescriptorTypeButtonInline = "buttonInline";
@@ -73,6 +72,11 @@ public class RowDescriptor<T> extends FormItemDescriptor {
     public static final String FormRowDescriptorTypeSectionSeperator = "sectionSeperator";
     public static final String FormRowDescriptorTypeHtmlVertical = "htmlVertical";
     public static final String FormRowDescriptorTypeSignature = "signature";
+    public static final String FormRowDescriptorTypeBarcodeScanner = "barcode";
+    public static final String FormRowDescriptorTypeVideoPicker = "video";
+    public static final String FormRowDescriptorTypeImagePicker = "image";
+    public static final String FormRowDescriptorTypeExternalPickerInline = "externalPickerInline";
+    public static final String FormRowDescriptorTypeLocationPicker = "locationPicker";
 
     private String mRowType;
     private Value<T> mValue;

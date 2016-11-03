@@ -17,4 +17,9 @@
         <attr name="sc_checked_text_color" format="color"/>
     </declare-styleable>
 
+    <declare-styleable name="TrackerView">
+        <attr name="frame_color" format="color" />
+        <attr name="frame_width" format="float" />
+    </declare-styleable>
+
 </resources>
