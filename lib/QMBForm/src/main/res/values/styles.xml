@@ -2,18 +2,16 @@
 
     <!-- Default form cell styles. -->
     <style name="TextAppearance.Form.Section" parent="@style/TextAppearance.AppCompat.Title">
-        <item name="android:textAllCaps">true</item>
+
     </style>
     <style name="TextAppearance.Form.Label" parent="@style/TextAppearance.AppCompat.Body1">
-        <item name="android:textSize">16sp</item>
-        <item name="android:textStyle">bold</item>
+
     </style>
-    <style name="TextAppearance.Form.Value" parent="@style/TextAppearance.AppCompat.Body2">
-        <item name="android:textSize">16sp</item>
-        <item name="android:textStyle">normal</item>
+    <style name="TextAppearance.Form.Value" parent="@style/TextAppearance.AppCompat.Body1">
+
     </style>
     <style name="TextAppearance.Form.Button" parent="@style/TextAppearance.AppCompat.Subhead">
-        <item name="android:textSize">16sp</item>
+
     </style>
 
 </resources>

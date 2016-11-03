@@ -9,7 +9,7 @@ android {
     compileSdkVersion 23
     buildToolsVersion "23.0.3"
     defaultConfig {
-        minSdkVersion 14
+        minSdkVersion 23
         targetSdkVersion 21
         versionCode 2
         versionName "1.1"
@@ -48,6 +48,9 @@ dependencies {
     // HTML Rendering Library
     compile project(':lib:HtmlSpanner')
 
+    // QR-Barcode Scanner
+    compile 'com.google.android.gms:play-services:8.4.0'
+
     testCompile 'junit:junit:4.12'
     testCompile 'org.hamcrest:hamcrest-core:1.2.1'
     testCompile 'org.robolectric:robolectric:3.0'
@@ -58,65 +61,5 @@ apply plugin: 'idea'
 idea {
     module {
         testOutputDir = file('build/test-classes/debug')
-    }
-}
-
-apply plugin: 'org.sonarqube'
-
-sonarqube {
-    properties {
-        property "sonar.host.url", "http://localhost:9000"
-        property "sonar.jdbc.url", "jdbc:mysql://localhost/sonar"
-        property "sonar.jdbc.driverClassName", "com.mysql.jdbc.Driver"
-        property "sonar.jdbc.username", "sonar"
-        property "sonar.jdbc.password", "sonar"
-
-        property "sonar.java.binaries", "$buildDir"
-        property "sonar.sources", "src/main/java"
-        property "sonar.tests", "src/test/java"
-
-        property 'sonar.junit.reportsPath', "$buildDir/test-results/release/"
-        property "sonar.jacoco.reportPath", "$buildDir/jacoco/testDebugUnitTest.exec"
-    }
-}
-
-
-apply plugin: "jacoco"
-
-jacoco {
-    toolVersion = "0.7.1.201405082137"
-    reportsDir = file("$buildDir/reports/jacoco")
-}
-
-task jacocoTestReport(type: JacocoReport ) {
-    description = "Generates Jacoco coverage reports: XML and HTML"
-    group = "Reporting"
-
-    jacocoClasspath = project.configurations['androidJacocoAnt']
-
-    def fileFilter = ['**/R.class',
-                      '**/R$*.class',
-                      '**/BuildConfig.*',
-                      '**/Manifest*.*',
-                      '**/*Test*.*',
-                      'android/**/*.*']
-
-    def debugTree = fileTree(dir: "${project.buildDir}/intermediates/classes/debug", excludes: fileFilter)
-    def mainSrc = "${project.projectDir}/src/main/java"
-
-    sourceDirectories = files([mainSrc])
-    classDirectories = files([debugTree])
-    executionData = fileTree(dir: project.projectDir, includes: ['**/*.exec', '**/*.ec'])
-
-    reports {
-        xml {
-            enabled = true
-            destination = "${project.buildDir}/reports/jacoco/test/jacocoTestReport.xml"
-        }
-        csv.enabled false
-        html {
-            enabled = true
-            destination = "${project.buildDir}/reports/jacoco"
-        }
     }
 }

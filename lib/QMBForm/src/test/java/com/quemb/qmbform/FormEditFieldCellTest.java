@@ -39,7 +39,7 @@ public class FormEditFieldCellTest {
 
         FormEditIntegerFieldCell testCell = new FormEditIntegerFieldCell(activity, rowDescriptor);
 
-        assertThat(testCell.getEditText().isEnabled(), is(false));
+        assertThat(testCell.getEditView().isEnabled(), is(false));
 
     }
 

@@ -20,10 +20,8 @@ import java.util.List;
  */
 public class FormSpinnerFieldCell extends FormTitleFieldCell {
     private Spinner mSpinner;
-    private ArrayList<Object> mValues;
 
-    public FormSpinnerFieldCell(Context context,
-                                RowDescriptor rowDescriptor) {
+    public FormSpinnerFieldCell(Context context, RowDescriptor rowDescriptor) {
         super(context, rowDescriptor);
     }
 
@@ -46,7 +44,7 @@ public class FormSpinnerFieldCell extends FormTitleFieldCell {
 
         if (selectorOptions.size() > 0) {
             FormOptionsObjectAdapter adapter = new FormOptionsObjectAdapter(getContext(),
-                    android.R.layout.simple_spinner_item,
+                    R.layout.spinner_item,
                     android.R.layout.simple_spinner_dropdown_item,
                     selectorOptions);
             mSpinner.setAdapter(adapter);
@@ -65,8 +63,7 @@ public class FormSpinnerFieldCell extends FormTitleFieldCell {
         }
         mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position,
-                                       long id) {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 FormOptionsObject selectedOption = (FormOptionsObject) mSpinner.getAdapter().getItem(position);
                 onValueChanged(new Value(selectedOption.getValue()));
             }
@@ -76,6 +73,9 @@ public class FormSpinnerFieldCell extends FormTitleFieldCell {
 
             }
         });
+
+        mSpinner.setEnabled(!getRowDescriptor().getDisabled());
+        mSpinner.setAlpha(!getRowDescriptor().getDisabled() ? 1.0f : 0.4f);
     }
 
     @Override
